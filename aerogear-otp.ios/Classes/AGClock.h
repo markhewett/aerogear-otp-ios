@@ -31,13 +31,40 @@
 @property (nonatomic, copy) NSDate *date;
 
 /**
- * Initialize a new AGClock object using the specified startingDate.
+ * The time step the AGClock object uses to calculate the interval.
+ */
+@property (nonatomic, assign) NSUInteger timeStep;
+
+/**
+ * Initialize a new AGClock object using the specified starting date
+ * and 30 second time step.
  *
  * @param startingDate The NSDate to initialize to.
  *
  * @returns A new AGClock object set to the date specified by startingDate.
  */
 - (id)initWithDate:(NSDate *)startingDate;
+
+/**
+ * Initialize a new AGClock object using the current starting date
+ * and the specified time step.
+ *
+ * @param timeStep The time step to use when calculating the interval.
+ *
+ * @returns A new AGClock object set to the date specified by startingDate.
+ */
+- (id)initWithTimeStep:(NSUInteger)timeStep;
+
+/**
+ * Initialize a new AGClock object using the specified starting date
+ * and time step.
+ *
+ * @param startingDate The NSDate to initialize to.
+ * @param timeStep The time step to use when calculating the interval.
+ *
+ * @returns A new AGClock object set to the date specified by startingDate.
+ */
+- (id)initWithDate:(NSDate *)startingDate timeStep:(NSUInteger)timeStep;
 
 /**
  * Calculate the time interval from the date this AGClock object

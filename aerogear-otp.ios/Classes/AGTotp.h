@@ -41,16 +41,53 @@
  */
 @interface AGTotp : AGOtp
 
-@property (nonatomic, copy) AGClock *clock;
+@property (nonatomic, assign) NSUInteger timeStep;
 
 /**
- * Returns an AGTotp object initialized with a secret specified by the given string.
+ * Returns an AGTotp object initialized with a secret specified by the given string,
+ * a token length of 6, the SHA1 has algorithm, and a 30 sec time step.
  *
  * @param secret The secret to use.
  *
  * @return An AGTotp object initialized by the specified secret.
  */
 - (id)initWithSecret:(NSData *)secret;
+
+/**
+ * Returns an AGTotp object initialized with a secret specified by the given string,
+ * the specified token length, the SHA1 has algorithm, and a 30 sec time step.
+ *
+ * @param secret The secret to use.
+ * @parem tokenLength The token length to return.
+ *
+ * @return An AGTotp object initialized by the specified secret.
+ */
+- (id)initWithSecret:(NSData *)secret tokenLength:(uint32_t)tokenLength;
+
+/**
+ * Returns an AGTotp object initialized with a secret specified by the given string,
+ * the specified token length, the specified hash algorithm, and a 30 sec time step.
+ *
+ * @param secret The secret to use.
+ * @parem tokenLength The token length to return.
+ * @param hashAlg The hash algorithm to use.
+ *
+ * @return An AGTotp object initialized by the specified secret.
+ */
+- (id)initWithSecret:(NSData *)secret tokenLength:(uint32_t)tokenLength hashAlg:(HashAlg)hashAlg;
+
+/**
+ * Returns an AGTotp object initialized with a secret specified by the given string,
+ * the specified token length, the specified hash algorithm, and the specified time step.
+ *
+ * @param secret The secret to use.
+ * @parem tokenLength The token length to return.
+ * @param hashAlg The hash algorithm to use.
+ * @param timeStep The time step to use.
+ *
+ * @return An AGTotp object initialized by the specified secret.
+ */
+- (id)initWithSecret:(NSData *)secret tokenLength:(uint32_t)tokenLength hashAlg:(HashAlg)hashAlg timeStep:(uint32_t)timeStep;
 
 /**
  * Generate an TOTP token using the current time.

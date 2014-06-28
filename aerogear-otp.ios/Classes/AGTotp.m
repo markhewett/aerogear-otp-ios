@@ -28,9 +28,22 @@ const NSUInteger defaultInterval = 30;
 @implementation AGTotp
 
 - (id)initWithSecret:(NSData *)secret {
-    if ((self = [super initWithSecret:secret])) {
+    return [self initWithSecret:secret tokenLength:6 hashAlg:SHA1 timeStep:defaultInterval];
+}
+
+- (id)initWithSecret:(NSData *)secret tokenLength:(uint32_t)tokenLength {
+    return [self initWithSecret:secret tokenLength:tokenLength hashAlg:SHA1 timeStep:defaultInterval];
+}
+
+- (id)initWithSecret:(NSData *)secret tokenLength:(uint32_t)tokenLength hashAlg:(HashAlg)hashAlg {
+    return [self initWithSecret:secret tokenLength:6 hashAlg:hashAlg timeStep:defaultInterval];
+}
+
+- (id)initWithSecret:(NSData *)secret tokenLength:(uint32_t)tokenLength hashAlg:(HashAlg)hashAlg timeStep:(uint32_t)timeStep {
+    if ((self = [super initWithSecret:secret tokenLength:tokenLength hashAlg:hashAlg])) {
+        _timeStep = timeStep;
     }
-    return (self);
+    return self;
 }
 
 - (NSString *)generateOTP {
@@ -38,11 +51,12 @@ const NSUInteger defaultInterval = 30;
 }
 
 - (NSString *)now {
-    return [self now:[[AGClock alloc] init]];
+    return [self now:[[AGClock alloc] initWithTimeStep:self.timeStep]];
 }
 
 - (NSString *)now:(AGClock *)clock {
-    uint64_t interval = [clock currentInterval];
+    AGClock *myClock = [[AGClock alloc] initWithDate:clock.date timeStep:self.timeStep];
+    uint64_t interval = [myClock currentInterval];
     return [super generateOTPForCounter:interval];
 }
 

@@ -48,4 +48,12 @@ NSDate *currentDate;
     STAssertEquals((uint64_t)45201600, interval, @"Incorrect clock interval");
 }
 
+- (void)testAGClockCurrentInterval60SecStep {
+    
+    AGClock *clock = [[AGClock alloc] initWithDate:currentDate timeStep:60];
+    uint64_t interval = [clock currentInterval];
+    NSLog(@"Test Interval: %qu", interval);
+    STAssertEquals((uint64_t)(45201600/2), interval, @"Incorrect clock interval");
+}
+
 @end

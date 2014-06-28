@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4D476D50195E747100D614E5 /* AGOtpTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D476D4F195E747100D614E5 /* AGOtpTests.m */; };
 		5700691681F3404B82D1B616 /* libPods-aerogear-otp.iosTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02EB89E49E7843ECB5C2BAA9 /* libPods-aerogear-otp.iosTests.a */; };
 		81F410675DF4BE98DD67260F /* AGClock.m in Sources */ = {isa = PBXBuildFile; fileRef = 81F418EFDDBDCB1AEDB7E5CB /* AGClock.m */; };
 		81F411400E888F8F8FC747C3 /* AGTotp.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 81F41F70D8A686C1492A99EC /* AGTotp.h */; };
@@ -62,6 +63,7 @@
 /* Begin PBXFileReference section */
 		02EB89E49E7843ECB5C2BAA9 /* libPods-aerogear-otp.iosTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-aerogear-otp.iosTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		40BD4D415A0A41898667C1F3 /* Pods-aerogear-otp.iosTests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-aerogear-otp.iosTests.xcconfig"; path = "Pods/Pods-aerogear-otp.iosTests.xcconfig"; sourceTree = SOURCE_ROOT; };
+		4D476D4F195E747100D614E5 /* AGOtpTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AGOtpTests.m; sourceTree = "<group>"; };
 		57A0DA83165E2CFA00F6965A /* AeroGearOTP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AeroGearOTP.h; path = Classes/AeroGearOTP.h; sourceTree = "<group>"; };
 		6F303D3816E7967B00F88AC0 /* common.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = common.xcconfig; sourceTree = "<group>"; };
 		81F410518A256C3F0B7D3755 /* AGBase32.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AGBase32.m; path = Classes/AGBase32.m; sourceTree = "<group>"; };
@@ -113,6 +115,7 @@
 			isa = PBXGroup;
 			children = (
 				81F41B5BE5FFADC666E61AA4 /* Supporting Files */,
+				4D476D4F195E747100D614E5 /* AGOtpTests.m */,
 				81F413635101311EA2858A9A /* AGTotpTests.m */,
 				E11169A116724E6900C07264 /* AGClockTests.m */,
 			);
@@ -312,6 +315,7 @@
 				E19BA98316727DDC00736639 /* AGClock.m in Sources */,
 				81F41258F05528DFC3EDD476 /* AGTotpTests.m in Sources */,
 				E1F939CF165AA14500C5EB63 /* AGTotp.m in Sources */,
+				4D476D50195E747100D614E5 /* AGOtpTests.m in Sources */,
 				E1F939D1165AA14F00C5EB63 /* AGOtp.m in Sources */,
 				E11169A216724E6900C07264 /* AGClockTests.m in Sources */,
 			);

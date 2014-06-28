@@ -58,4 +58,19 @@ NSDate *currentDate;
 
 }
 
+- (void)testAGTotp60s {
+    
+    AGClock *clock = [[AGClock alloc] initWithDate:currentDate];
+    
+    NSString *secret = @"B2374TNIQ3HKC446";
+    
+    NSData *secretData = [AGBase32 base32Decode:secret];
+    
+    AGTotp *generator
+    = [[AGTotp alloc] initWithSecret:secretData tokenLength:6 hashAlg:SHA1 timeStep:60];
+    
+    STAssertEqualObjects(@"639420", [generator now:clock], @"Incorrect OTP");
+    
+}
+
 @end

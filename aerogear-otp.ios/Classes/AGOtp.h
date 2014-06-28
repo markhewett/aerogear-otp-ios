@@ -20,6 +20,12 @@
 
 @class AGClock;
 
+typedef enum {
+    SHA1 = 1,
+    SHA256 = 256,
+    SHA512 = 512
+} HashAlg;
+
 /** The Otp class generates a one-time password (OTP) using
  * the HMAC-Based One-Time Password Algorithm described in RFC6238:
  * http://tools.ietf.org/html/rfc6238
@@ -49,15 +55,41 @@
 @interface AGOtp : NSObject
 
 @property (readonly, nonatomic, copy) NSData *secret;
+@property (readonly, nonatomic, assign) uint32_t tokenLength;
+@property (readonly, nonatomic, assign) HashAlg hashAlg;
 
 /**
- * Returns an AGOtp object initialized with a secret specified by the given string.
+ * Returns an AGOtp object initialized with a secret specified by the given string,
+ * a token length of 6, and the SHA1 hash algorithm.
  *
  * @param secret The secret to use.
  *
- * @return An AGTotp object initialized by the specified secret.
+ * @return An AGOtp object initialized by the specified secret.
  */
 - (id)initWithSecret:(NSData *)secret;
+
+/**
+ * Returns an AGOtp object initialized with a secret specified by the given string,
+ * the specified token length, and the SHA1 has algorithm.
+ *
+ * @param secret The secret to use.
+ * @parem tokenLength The token length to return.
+ *
+ * @return An AGOtp object initialized by the specified secret.
+ */
+- (id)initWithSecret:(NSData *)secret tokenLength:(uint32_t)tokenLength;
+
+/**
+ * Returns an AGOtp object initialized with a secret specified by the given string,
+ * the specified token length, and the specified hash algorithm.
+ *
+ * @param secret The secret to use.
+ * @parem tokenLength The token length to return.
+ * @param hashAlg The hash algorithm to use.
+ *
+ * @return An AGOtp object initialized by the specified secret.
+ */
+- (id)initWithSecret:(NSData *)secret tokenLength:(uint32_t)tokenLength hashAlg:(HashAlg)hashAlg;
 
 /**
  * Generate an OTP token using the specified counter.

@@ -21,15 +21,6 @@
 
 #import <CommonCrypto/CommonCrypto.h>
 
-typedef enum {
-    SIX   = 1000000,
-    SEVEN = 10000000,
-    EIGHT = 100000000,
-} Digits;
-
-
-const uint32_t defaultDigits = 6;
-
 @interface AGOtp ()
 @property (readwrite, nonatomic, copy) NSData *secret;
 @end
@@ -37,6 +28,8 @@ const uint32_t defaultDigits = 6;
 @implementation AGOtp
 
 @synthesize secret = secret_;
+@synthesize tokenLength = tokenLength_;
+@synthesize hashAlg = hashAlg_;
 
 - (id)init {
   [self doesNotRecognizeSelector:_cmd];
@@ -44,8 +37,18 @@ const uint32_t defaultDigits = 6;
 }
 
 - (id)initWithSecret:(NSData *)secret {
+  return [self initWithSecret:secret tokenLength:6 hashAlg:SHA1];
+}
+
+- (id)initWithSecret:(NSData *)secret tokenLength:(uint32_t)tokenLength {
+  return [self initWithSecret:secret tokenLength:tokenLength hashAlg:SHA1];
+}
+
+- (id)initWithSecret:(NSData *)secret tokenLength:(uint32_t)tokenLength hashAlg:(HashAlg)hashAlg {
   if ((self = [super init])) {
     secret_ = [secret copy];
+    tokenLength_ = tokenLength;
+    hashAlg_ = hashAlg;
   }
   return self;
 }
@@ -61,8 +64,24 @@ const uint32_t defaultDigits = 6;
 }
 
 - (NSString *)generateOTPForCounter:(uint64_t)counter {
-  CCHmacAlgorithm alg = kCCHmacAlgSHA1;
-  NSUInteger hashLength = CC_SHA1_DIGEST_LENGTH;
+  CCHmacAlgorithm alg;
+  NSUInteger hashLength;
+  switch (self.hashAlg) {
+    case SHA1:
+      alg = kCCHmacAlgSHA1;
+      hashLength = CC_SHA1_DIGEST_LENGTH;
+      break;
+    case SHA256:
+      alg = kCCHmacAlgSHA256;
+      hashLength = CC_SHA256_DIGEST_LENGTH;
+      break;
+    case SHA512:
+      alg = kCCHmacAlgSHA512;
+      hashLength = CC_SHA512_DIGEST_LENGTH;
+      break;
+    default:
+      break;
+  }
 
   NSMutableData *hash = [NSMutableData dataWithLength:hashLength];
 
@@ -78,9 +97,9 @@ const uint32_t defaultDigits = 6;
   char const offset = ptr[hashLength-1] & 0x0f;
   uint32_t truncatedHash =
     NSSwapBigIntToHost(*((uint32_t *)&ptr[offset])) & 0x7fffffff;
-  uint32_t pinValue = truncatedHash % SIX;
+  uint32_t pinValue = truncatedHash % (uint32_t)pow(10.0, self.tokenLength);
 
-  return [NSString stringWithFormat:@"%0*d", defaultDigits, pinValue];
+  return [NSString stringWithFormat:@"%0*d", self.tokenLength, pinValue];
 }
 
 @end
